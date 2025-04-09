@@ -1,3 +1,4 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
 /// <reference types='cypress' />
 /// <reference types='../support' />
 
@@ -29,7 +30,6 @@ describe('User', () => {
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
 
     cy.visit(`/#/@${user2.username}`);
@@ -46,15 +46,11 @@ describe('User', () => {
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
 
     cy.visit(`/#/@${user2.username}`);
 
     cy.getByDataCy('follow-btn').click();
-
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
 
     cy.getByDataCy('unfollow-btn').click();
   });

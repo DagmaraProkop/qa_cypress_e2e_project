@@ -11,7 +11,6 @@ const articlePage = new ArticlePageObject();
 
 describe('Article', () => {
   let user;
-  const article = generateArticle();
 
   function generateArticle() {
     const randomNumber = Math.random().toString().slice(2, 8);
@@ -36,6 +35,8 @@ describe('Article', () => {
   });
 
   it('should be created using New Article form', () => {
+    const article = generateArticle();
+
     cy.getByDataCy('new-article-btn').click();
 
     articlePage.typeArticle(article.title);
@@ -48,6 +49,8 @@ describe('Article', () => {
   });
 
   it('should be edited using Edit button', () => {
+    const article = generateArticle();
+
     cy.getByDataCy('new-article-btn').click();
 
     articlePage.typeArticle(article.title);
@@ -77,6 +80,8 @@ describe('Article', () => {
   });
 
   it('should be deleted using Delete button', () => {
+    const article = generateArticle();
+
     cy.getByDataCy('new-article-btn').click();
 
     articlePage.typeArticle(article.title);

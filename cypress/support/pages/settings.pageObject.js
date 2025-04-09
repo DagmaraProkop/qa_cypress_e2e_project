@@ -45,10 +45,10 @@ class SettingsPageObject extends PageObject {
       .type(username);
   }
 
-  typeBio() {
+  typeBio(newBio) {
     this.bioField
       .clear()
-      .type('This is a new bio');
+      .type(newBio);
   }
 
   clickUpdateBtn() {
