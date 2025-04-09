@@ -2,7 +2,7 @@
   <div>
     <div v-if="is_loading" class="article-preview">Loading articles...</div>
     <div v-else>
-      <div v-if="articles.length === 0" class="article-preview">
+      <div v-if="articles.length === 0" class="article-preview" data-cy="articles-list">
         No articles are here... yet.
       </div>
       <ArticlePreview
