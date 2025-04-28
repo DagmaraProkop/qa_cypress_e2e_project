@@ -3,7 +3,7 @@
 /// <reference types='../support' />
 
 import SignInPageObject from '../support/pages/signIn.pageObject';
-
+import { generateUser, generateUser2 } from '../support/generate';
 const signInPage = new SignInPageObject();
 
 describe('User', () => {
@@ -12,46 +12,46 @@ describe('User', () => {
 
   beforeEach(() => {
     cy.task('db:clear');
-    cy.task('generateUser').then((generateUser) => {
-      user = generateUser;
-    });
-
-    cy.task('generateUser').then((generateUser2) => {
-      user2 = generateUser2;
-    });
   });
 
   it('should be able to follow the another user', () => {
-    cy.register(user.email, user.username, user.password);
-    cy.register(user2.email, user2.username, user2.password);
+    user = generateUser();
+    user2 = generateUser2();
 
+    cy.register(user.email, user.username, user.password);
+    cy.register(user2.email2, user2.username2, user2.password2);
     signInPage.visit();
     signInPage.typeEmail(user.email);
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
 
-    cy.wait(1000);
+    cy.wait(2000);
 
-    cy.visit(`/#/@${user2.username}`);
+    cy.visit(`/#/@${user2.username2}/`);
 
     cy.getByDataCy('follow-btn').click();
+
+    cy.getByDataCy('follow-btn').should('contain.text', 'Unfollow');
   });
 
   it('should be able to unfollow the another user', () => {
-    cy.register(user.email, user.username, user.password);
-    cy.register(user2.email, user2.username, user2.password);
+    user = generateUser();
+    user2 = generateUser2();
 
+    cy.register(user.email, user.username, user.password);
+    cy.register(user2.email2, user2.username2, user2.password2);
     signInPage.visit();
     signInPage.typeEmail(user.email);
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
 
-    cy.wait(1000);
+    cy.wait(2000);
 
-    cy.visit(`/#/@${user2.username}`);
+    cy.visit(`/#/@${user2.username2}/`);
 
     cy.getByDataCy('follow-btn').click();
 
     cy.getByDataCy('unfollow-btn').click();
+    cy.getByDataCy('follow-btn').should('contain.text', 'Follow');
   });
 });

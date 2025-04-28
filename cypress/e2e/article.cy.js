@@ -12,15 +12,6 @@ const articlePage = new ArticlePageObject();
 describe('Article', () => {
   let user;
 
-  function generateArticle() {
-    const randomNumber = Math.random().toString().slice(2, 8);
-    const title = `Article title${randomNumber}`;
-    const description = `This is an ${title} descrition`;
-    const body = 'This a a random article';
-
-    return { title, description, body };
-  };
-
   beforeEach(() => {
     cy.task('db:clear');
     cy.task('generateUser').then((generateUser) => {
@@ -35,6 +26,15 @@ describe('Article', () => {
   });
 
   it('should be created using New Article form', () => {
+    function generateArticle() {
+      const randomNumber = Math.random().toString().slice(2, 8);
+      const title = `Article title${randomNumber}`;
+      const description = `This is an ${title} descrition`;
+      const body = 'This a a random article';
+
+      return { title, description, body };
+    };
+
     const article = generateArticle();
 
     cy.getByDataCy('new-article-btn').click();
@@ -49,6 +49,15 @@ describe('Article', () => {
   });
 
   it('should be edited using Edit button', () => {
+    function generateArticle() {
+      const randomNumber = Math.random().toString().slice(2, 8);
+      const title = `Article title${randomNumber}`;
+      const description = `This is an ${title} descrition`;
+      const body = 'This a a random article';
+
+      return { title, description, body };
+    };
+
     const article = generateArticle();
 
     cy.getByDataCy('new-article-btn').click();
@@ -80,6 +89,15 @@ describe('Article', () => {
   });
 
   it('should be deleted using Delete button', () => {
+    function generateArticle() {
+      const randomNumber = Math.random().toString().slice(2, 8);
+      const title = `Article title${randomNumber}`;
+      const description = `This is an ${title} descrition`;
+      const body = 'This a a random article';
+
+      return { title, description, body };
+    };
+
     const article = generateArticle();
 
     cy.getByDataCy('new-article-btn').click();
@@ -94,10 +112,8 @@ describe('Article', () => {
 
     cy.getByDataCy('username-link').click();
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
-
-    cy.get('h1').should('contain.text', article.title).click();
+    // eslint-disable-next-line max-len
+    cy.get('h1', { timeout: 1000 }).should('contain.text', article.title).click();
 
     articlePage.clickDeleteBtn();
 
